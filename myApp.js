@@ -5,11 +5,12 @@
 
 var express = require('express'); // Do Not Edit
 var app = express();              // Do Not Edit
-var helmet = require('helmet'); 
+var helmet = require('helmet');
+
 // ----
 
 /** - Challenges - *
-********************/ 
+********************/
 
 /** 1) Install and require `helmet` */
 
@@ -46,7 +47,7 @@ var helmet = require('helmet');
 // We don't need our app to be framed, so you should use `helmet.frameguard()`
 // passing to it the configuration object `{action: 'deny'}`
 
- 
+
 
 /** 4) Mitigate the risk of XSS - `helmet.xssFilter()` */
 
@@ -113,7 +114,7 @@ var helmet = require('helmet');
 // set the field `force` to `true` in the config object. To not alter hyperdev security 
 // policy we will intercept and restore the header, after inspecting it for testing.
 
-var ninetyDaysInSeconds = 90*24*60*60;
+var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 
 
 //**Note**:
@@ -177,7 +178,7 @@ var ninetyDaysInSeconds = 90*24*60*60;
 
 
 
-/** TIP: */ 
+/** TIP: */
 
 // `app.use(helmet())` will automatically include all the middleware
 // presented above, except `noCache()`, and `contentSecurityPolicy()`,
@@ -207,6 +208,7 @@ var ninetyDaysInSeconds = 90*24*60*60;
 module.exports = app;
 var api = require('./server.js');
 app.use(express.static('public'));
+app.use(helmet.hidePoweredBy());
 app.disable('strict-transport-security');
 app.use('/_api', api);
 app.get("/", function (request, response) {
