@@ -6,7 +6,12 @@
 var express = require('express'); // Do Not Edit
 var app = express();              // Do Not Edit
 var helmet = require('helmet');
-
+app.use(helmet.hidePoweredBy());
+app.use(helmet.frameguard({ action: "deny" }));
+app.use(helmet.noSniff())
+app.use(helmet.hsts({maxAge:7776000,force:true}))
+app.use(helmet.dnsPrefetchControl())
+app.use(helmet.noCache())
 // ----
 
 /** - Challenges - *
@@ -208,7 +213,6 @@ var ninetyDaysInSeconds = 90 * 24 * 60 * 60;
 module.exports = app;
 var api = require('./server.js');
 app.use(express.static('public'));
-app.use(helmet.hidePoweredBy());
 app.disable('strict-transport-security');
 app.use('/_api', api);
 app.get("/", function (request, response) {
